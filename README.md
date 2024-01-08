@@ -84,3 +84,40 @@ Compensation from the persistence layer.
 
 ## Delivery
 Please upload your results to a publicly accessible Git repo. Free ones are provided by Github and Bitbucket.
+
+## Post TakeHome - Quinn's Additions
+• Slightly reworked the Employee class, no longer stores direct reports as a list of Employees, instead uses an 
+EmployeeId wrapper object that only contains a value for employeeId, then in the setter method in Employee it converts
+that list of EmployeeIds into a list of Strings
+
+• Created the ReportingStructure type. ReportingStructure contains an Employee and an int, with the int representing the
+amount of reports underneath the given Employee. Used recursion to recursively get all the employees that would be under 
+a specified employee. Also added a set that would append any unique employeeId. If the employeeId was not unique, it 
+would return a 0 as no new employees would be under the specified employee. Also created a basic testcase to verify the
+function produced an object with the results expected given a specified user (John Lennon in this case)
+
+• Created the Compensation type. Compensation included a String for Employee Id, a Date object for the data, and a
+double for the salary. Created a CompensationRepository and a CompensationController for persistent database storage and
+rest api access respectively. Also created the CompensationService and CompensationServiceImpl to add the functionality 
+needed after a rest api request was submitted for Compensation. A testcase testing the CompensationService's create and
+read functions was created in CompensationServiceImplTest.java.
+
+Compensation Endpoints
+```
+* CREATE
+    * HTTP Method: POST 
+    * URL: localhost:8080/compensation
+    * PAYLOAD: Compensation
+    * RESPONSE: Compensation
+* READ
+    * HTTP Method: GET 
+    * URL: localhost:8080/compensation/{id}
+    * RESPONSE: Compensation
+```
+
+• Used the Employee Id instead of the Employee object in Compensation. This was due to the fact that Employee data is
+already stored in the Employee database, and it seemed redundant to have both databases be partially storing that amount
+of the same data. Not only that, but since Employee would be persisted in multiple places, every time you updated the 
+Employee database, you would in turn also have to update the Compensation database. As the Employee Id would not change,
+that meant that if you wanted the Employee associated with a Compensation, you would just need to query the Employee 
+database.

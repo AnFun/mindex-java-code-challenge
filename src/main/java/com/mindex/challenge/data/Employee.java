@@ -1,6 +1,7 @@
 package com.mindex.challenge.data;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Employee {
     private String employeeId;
@@ -8,7 +9,9 @@ public class Employee {
     private String lastName;
     private String position;
     private String department;
-    private List<Employee> directReports;
+
+    // Converted this to a list of strings instead of employees using the EmployeeId
+    private List<String> directReports;
 
     public Employee() {
     }
@@ -53,11 +56,13 @@ public class Employee {
         this.department = department;
     }
 
-    public List<Employee> getDirectReports() {
+    public List<String> getDirectReports() {
         return directReports;
     }
 
-    public void setDirectReports(List<Employee> directReports) {
-        this.directReports = directReports;
+    // Use EmployeeId object to get EmployeeId value from database instead of an entire Employee
+    // Then convert list of EmployeeIds to list of Strings
+    public void setDirectReports(List<EmployeeId> directReports) {
+        this.directReports = directReports.stream().map(EmployeeId::getEmployeeId).collect(Collectors.toList());
     }
 }

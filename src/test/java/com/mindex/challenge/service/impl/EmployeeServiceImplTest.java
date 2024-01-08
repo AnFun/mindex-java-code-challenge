@@ -25,9 +25,6 @@ public class EmployeeServiceImplTest {
     private String employeeUrl;
     private String employeeIdUrl;
 
-    @Autowired
-    private EmployeeService employeeService;
-
     @LocalServerPort
     private int port;
 
@@ -77,7 +74,7 @@ public class EmployeeServiceImplTest {
         assertEmployeeEquivalence(readEmployee, updatedEmployee);
     }
 
-    private static void assertEmployeeEquivalence(Employee expected, Employee actual) {
+    public static void assertEmployeeEquivalence(Employee expected, Employee actual) {
         assertEquals(expected.getFirstName(), actual.getFirstName());
         assertEquals(expected.getLastName(), actual.getLastName());
         assertEquals(expected.getDepartment(), actual.getDepartment());
